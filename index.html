@@ -1,47 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charity Water Landing Page</title>
-    <link rel="stylesheet" href="styles.css">
+  <!-- Set character encoding and responsive viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charity: Water</title>
+  <!-- Import Google Fonts for better text style -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@400;700&display=swap');
+
+    /* Set up basic styles for the whole page */
+    body, html {
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+      font-family: 'Proxima Nova', Arial, sans-serif; /* Use Proxima Nova for all text */
+      background-color: #fff7e1; /* Light background color */
+    }
+
+    /* Make sure all elements use Proxima Nova font */
+    * {
+      font-family: 'Proxima Nova', Arial, sans-serif;
+    }
+
+    /* Style the header section */
+    header {
+      background-color: #fff7e1; /* Same as page background */
+      display: flex; /* Use flexbox to arrange items in a row */
+      justify-content: space-between; /* Put logo on left, button on right */
+      align-items: center; /* Vertically center items */
+      padding: 15px 30px; /* Space around header content */
+    }
+
+    /* Style the logo image in the header */
+    header img {
+      height: 40px; /* Set logo height */
+    }
+
+    /* Style the donate button in the header */
+    .donate-btn {
+      background-color: #FFc907; /* Yellow background */
+      color: black; /* Black text */
+      padding: 10px 20px; /* Space inside button */
+      border-radius: 5px; /* Rounded corners */
+      text-decoration: none; /* Remove underline */
+      font-weight: bold; /* Make text bold */
+    }
+    /* Add a hover effect for the donate button */
+    .donate-btn:hover {
+      background-color: #ffd84a; /* Slightly lighter yellow on hover */
+      color: #222; /* Slightly darker text on hover */
+      /* Add a simple shadow to make it pop */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Style the hero section (main banner) */
+    .hero {
+      position: relative; /* Needed for child positioning */
+      background: url('img/Untitled design(2).png') no-repeat center center/cover; /* Set hero background image */
+      height: 100vh; /* Make hero fill the screen */
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack children vertically */
+      justify-content: flex-start; /* Align content to the top */
+      align-items: flex-start; /* Align content to the left */
+      padding-top: 40px; /* Space at the top */
+      padding-left: 50px; /* Space on the left */
+      padding-right: 50px; /* Space on the right */
+      color: black; /* Black text */
+    }
+
+    /* Style the main headline in the hero */
+    .hero h1 {
+      font-size: 3rem; /* Large text */
+      font-weight: bold; /* Bold text */
+      margin-bottom: 20px; /* Space below headline */
+      line-height: 1.2; /* Space between lines */
+    }
+
+    /* Style the paragraph in the hero */
+    .hero p {
+      max-width: 500px; /* Limit width for readability */
+      /* Gradient background: solid on left, transparent on right */
+      background: linear-gradient(
+        to right,
+        rgba(119, 168, 187, 0.8) 0%,
+        rgba(119, 168, 187, 0.4) 100%
+      );
+      padding: 15px; /* Space inside paragraph */
+      border-radius: 10px; /* Rounded corners */
+      font-size: 1.2rem; /* Slightly larger text */
+      margin-bottom: 20px; /* Space below paragraph */
+    }
+
+    /* Style for the slider-style call-to-action (CTA) button */
+    .cta-slider {
+      position: relative; /* Needed for highlight positioning */
+      display: flex; /* Arrange CTA options in a row */
+      width: 320px; /* Set width of CTA */
+      height: 60px; /* Set height of CTA */
+      background: #e0e0e0; /* Light gray background */
+      border-radius: 50px; /* Fully rounded corners */
+      overflow: hidden; /* Hide anything outside the rounded area */
+      cursor: pointer; /* Show pointer on hover */
+      font-weight: bold; /* Bold text */
+      /* Add a stronger shadow to make the slider pop out */
+      box-shadow: 0 6px 16px rgba(0,0,0,0.22), 0 1.5px 4px rgba(0,0,0,0.18);
+    }
+
+    /* Style for each option in the CTA slider */
+    .cta-slider span {
+      flex: 1; /* Each option takes equal space */
+      display: flex; /* Center text vertically and horizontally */
+      justify-content: center;
+      align-items: center;
+      z-index: 2; /* Make sure text is above highlight */
+      transition: color 0.3s ease; /* Smooth color change */
+    }
+
+    /* Highlight effect for the active CTA option */
+    .highlight {
+      position: absolute; /* Position highlight inside CTA */
+      top: 0;
+      left: 0;
+      width: 50%; /* Highlight covers half the CTA */
+      height: 100%;
+      background: #FFc907; /* Yellow highlight */
+      border-radius: 50px; /* Rounded highlight */
+      transition: transform 0.3s ease; /* Smooth slide effect */
+      z-index: 1; /* Behind the text */
+    }
+
+    /* Show highlight on the left when left option is active */
+    .cta-slider.left-active .highlight {
+      transform: translateX(0%);
+    }
+
+    /* Show highlight on the right when right option is active */
+    .cta-slider.right-active .highlight {
+      transform: translateX(100%);
+    }
+
+    /* Change text color for active/inactive options */
+    .cta-slider.left-active span:first-child,
+    .cta-slider.right-active span:last-child {
+      color: #000; /* Active option is black */
+    }
+    /* Make inactive option gray and ensure it overrides other styles */
+    .cta-slider.right-active span#join {
+      color: #555 !important;
+    }
+    .cta-slider.left-active span#donate {
+      color: #555 !important;
+    }
+
+    /* Style for the info paragraph below the CTA slider */
+    #cta-info {
+      width: 320px; /* Match the slider width */
+      color: #fff7e1; /* White text */
+      background: none; /* Remove background */
+      margin-top: 10px; /* Space above the info text */
+      font-size: 1rem; /* Normal font size */
+      text-align: center; /* Center the text */
+      border-radius: 0; /* Remove rounded corners */
+      padding: 0; /* Remove padding */
+    }
+
+    /* Responsive styles for smaller screens */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 0 20px; /* Less space on sides */
+        align-items: center; /* Center content horizontally */
+        text-align: center; /* Center text */
+      }
+      .hero h1 {
+        font-size: 2rem; /* Smaller headline */
+      }
+      .hero p {
+        /* Gradient background: solid at top, transparent at bottom for small screens */
+        background: linear-gradient(
+          to bottom,
+          rgba(119, 168, 187, 0.8) 0%,
+          rgba(119, 168, 187, 0.4) 100%
+        );
+        font-size: 1rem; /* Smaller paragraph */
+      }
+      .cta-slider {
+        width: 240px; /* Smaller CTA */
+        height: 50px;
+      }
+      .cta-slider span {
+        font-size: 0.9rem; /* Smaller text */
+      }
+      #cta-info {
+        width: 240px; /* Match the smaller slider width */
+        font-size: 0.9rem; /* Smaller font size */
+      }
+      header {
+        padding-left: 5px; /* Move logo further left */
+        padding-right: 15px; /* Less space on right */
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Hero Section: This is the main banner at the top of the page -->
-    <section class="hero">
-        <!-- Main headline -->
-        <h1>Clean Water for Everyone</h1>
-        <!-- Subheadline -->
-        <p>Join us in bringing safe, clean water to communities in need.</p>
-    </section>
+  <!-- Header section with logo and donate button -->
+  <header>
+    <!-- Charity: Water logo -->
+    <img id="main-logo" src="img/cw_logo-2.png" alt="Charity: Water Logo">
+    <!-- Donate button -->
+    <a href="#" class="donate-btn">Donate</a>
+  </header>
 
-    <!-- Story Section: This tells the story of the nonprofit -->
-    <section class="story">
-        <h2>Our Story</h2>
-        <p>
-         
-    </section>
+  <!-- Hero section with headline, description, and CTA slider -->
+  <section class="hero">
+    <!-- Main headline -->
+    <h1>Give.<br>Change lives.<br>See the impact!</h1>
+    <!-- Description paragraph -->
+    <p>
+      Follow every dollar as 100% of your donation provides lasting access to clean, safe drinking water for families and communities who need it most.
+    </p>
+    <!-- Slider-style call-to-action button -->
+    <div class="cta-slider left-active" id="ctaButton">
+      <div class="highlight"></div>
+      <span id="join">Join The Spring</span>
+      <span id="donate">Donate Now!</span>
+    </div>
+    <!-- Info text that changes based on active CTA option -->
+    <p id="cta-info">
+      Join a global community donating monthly to fund lasting clean water solutions!
+    </p>
+  </section>
 
-    <!-- Real-World Impact Story Section -->
-    <section class="impact-story">
-        <!-- Section headline -->
-        <h2>Real Impact: Meet Amina</h2>
-        <!-- Container for image and text -->
-        <div class="impact-content">
-            <!-- Impact image -->
-            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Amina smiling with clean water" class="impact-image">
-            <!-- Impact story text -->
-            <p>
-                Amina used to walk miles every day to collect water for her family. Thanks to your support, her village now has a clean water well. Amina can go to school and her family is healthier and happier.
-            </p>
-        </div>
-    </section>
+  <!-- JavaScript for CTA slider interaction -->
+  <script>
+    // Get references to CTA slider and its options
+    const ctaButton = document.getElementById('ctaButton');
+    const join = document.getElementById('join');
+    const donate = document.getElementById('donate');
 
-    <!-- Call-to-Action Section: This encourages visitors to take action -->
-    <section class="call-to-action">
-        <h2>Make a Difference</h2>
-        <p>Your support can help save lives. Every donation brings us closer to a world with clean water for all.</p>
-        <a href="#" class="donate-button">Donate Now</a>
-    </section>
+    // Get reference to the info text paragraph
+    const ctaInfo = document.getElementById('cta-info');
+
+    // When mouse enters "Join The Spring", highlight left side
+    join.addEventListener('mouseenter', () => {
+      ctaButton.classList.add('left-active');
+      ctaButton.classList.remove('right-active');
+      // Update info text for left option
+      ctaInfo.textContent = "Join a global community donating monthly to fund lasting clean water solutions!";
+    });
+
+    // When mouse enters "Donate Now!", highlight right side
+    donate.addEventListener('mouseenter', () => {
+      ctaButton.classList.add('right-active');
+      ctaButton.classList.remove('left-active');
+      // Update info text for right option
+      ctaInfo.textContent = "Make a one-time donation to help bring clean water to communities in need!";
+    });
+
+    // When "Join The Spring" is clicked, go to join page
+    join.addEventListener('click', () => {
+      window.location.href = 'join.html'; // Replace with actual link
+    });
+
+    // When "Donate Now!" is clicked, go to donate page
+    donate.addEventListener('click', () => {
+      window.location.href = 'donate.html'; // Replace with actual link
+    });
+
+    // Change logo only when hero text is center justified
+    function updateLogoForCenterJustified() {
+      var logo = document.getElementById('main-logo');
+      var hero = document.querySelector('.hero');
+      // Get computed style for text-align
+      var heroTextAlign = window.getComputedStyle(hero).textAlign;
+      if (heroTextAlign === 'center') {
+        logo.src = "img/water-can-transparent.png";
+      } else {
+        logo.src = "img/cw_logo-2.png";
+      }
+    }
+
+    // Run when page loads and when window is resized
+    window.addEventListener('DOMContentLoaded', updateLogoForCenterJustified);
+    window.addEventListener('resize', updateLogoForCenterJustified);
+  </script>
 </body>
 </html>
